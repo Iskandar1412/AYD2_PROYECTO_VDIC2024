@@ -1,0 +1,80 @@
+stages:
+  - install_dependencies
+  - test
+  - build
+  - push
+  - deploy
+
+variables:
+  NODE_ENV: 'production'
+  DOCKER_DRIVER: overlay2
+  IMAGE_TAG: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  IMAGE_RELEASE_TAG: $CI_REGISTRY_IMAGE/backend
+
+before_script:
+  - pwd
+  - echo "${USER}"
+  - echo "Iniciando pipeline de CI/CD"
+  - cd Proyecto/Backend
+
+# Instalación de dependencias
+install_dependencies:
+  stage: install_dependencies
+  script:
+    - npm ci
+  cache:
+    paths:
+      - node_modules/
+  only:
+    - develop
+    - main
+
+# Ejecución de pruebas
+test:
+  stage: test
+  script:
+    - npm run test
+  only:
+    - develop
+    - main
+
+build_image:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t $IMAGE_TAG .
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker tag $IMAGE_TAG $IMAGE_RELEASE_TAG:latest
+  only:
+    - develop
+    - main
+
+push_image:
+  stage: push
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY
+    - docker push $IMAGE_TAG
+    - docker push $IMAGE_RELEASE_TAG:latest
+  only:
+    - develop
+    - main
+
+# Despliegue en producción
+deploy_production:
+  stage: deploy
+  script:
+    - echo "Desplegando en producción"
+    - set -x
+    - echo "$SSH_USER"
+    - echo "$SSH_SERVER"
+    - ssh -i ~/.ssh/ssh.key "$SSH_USER@$SSH_SERVER" "cd /home/ubuntu/dockerfiles && docker compose pull"
+    - ssh -i ~/.ssh/ssh.key "$SSH_USER@$SSH_SERVER" "cd /home/ubuntu/dockerfiles && sh down.sh && sh up.sh"
+    - echo "Despliegue completado"
+  only:
+    - develop
+    - main

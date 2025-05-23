@@ -1,0 +1,14 @@
+{
+    "nombres": "Prueba empleado",
+    "apellidos": "prueba",
+    "edad": "45",
+    "dpi": "33215646545131",
+    "telefono": "88945565",
+    "usuario": "pruebaEmpleadoe2e",
+    "correo": "XXXXX@gmail.com",
+    "genero": "Masculino",
+    "estadoCivil": "Soltero",
+    "foto": "imagen.jpg",
+    "firma": "imagen.jpg",
+    "papeleria": "Logical.pdf"
+}

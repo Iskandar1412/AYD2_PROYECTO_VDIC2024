@@ -1,0 +1,15 @@
+{
+  "nombre": "Pruebas",
+  "apellido": "Pruebas",
+  "cui": "789854632156656",
+  "telefono": "33256546",
+  "correo": "XXXXX2@gmail.com",
+  "edad": "21",
+  "genero": "Masculino",
+  "direccion": "Pruebas",
+  "foto": "imagen.jpg",
+  "tipoCuenta": "Monetaria",
+  "preguntaSeguridad": "Nombre de Mascota",
+  "respuesta": "Muñeca",
+  "monto": "3500"
+}

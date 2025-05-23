@@ -1,0 +1,34 @@
+---
+- name: Deployment Frontend
+  hosts: localhost
+  become: yes
+  tasks:
+    - name: Instalar Git
+      apt:
+        name: git
+        state: present
+        update_cache: yes
+
+    - name: Clonar el repositorio privado usando un token de acceso personal
+      git:
+        repo: 'https://iskandar181278:{{ lookup("env", "GIT_TOKEN") }}@gitlab.com/iskandar181278/ayd2_pv_g4'
+        dest: /home/ubuntu/dockerfiles
+        version: "main"
+        force: yes
+
+    - name: Agregar usuario al grupo Docker para evitar usar sudo
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+
+    - name: Construir la imagen Docker desde el Dockerfile
+      command: docker build -t frontayd2 .
+      args:
+        chdir: /home/ubuntu/dockerfiles/Proyecto/Front
+
+    - name: Ejecutar el contenedor de la imagen Docker
+      command: docker run -d -p 5173:5173 --name frontayd2 frontayd2
+
+    - name: Verificar que el contenedor esté corriendo
+      command: docker ps

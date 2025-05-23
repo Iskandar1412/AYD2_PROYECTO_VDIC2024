@@ -1,0 +1,51 @@
+Procedures:
+/- Login(correo, password): retornar cui,usuario,rol, msg(success)
+/*- PagarServicio(monto,fecha,cuenta_id,servicio_id,moneda_id,encargado_cui): retornar trans_id, msg(success)
+/- PagarPrestamo(monto, fecha, cuenta_id, prestamo_id, moneda_id, encargado_cui): trans_id, msg(success)
+/*- BuscarCuentaCui(cui/cuentaid): cuenta_id, nombres, apellidos, tipo, array(transacciones) msg(success)
+/*- MostrarSaldo(cuenta_id): saldo, fecha ultima trans
+/- RetirarDinero(monto, fecha, cuenta_id, retiro_id, moneda_id, encargado_id): trans_id, msg(success)// aqui se trabaja cambiarmoneda solo que con moneda en dolares
+/- GenerarComprobante(trans_id): cuenta_id, tipo, fecha, monto,tipomoneda, nombre_encargado, msg(success)
+/- DepositarDinero(monto, fecha, cuenta_id, deposito_id, moneda_id, encargado_cui): trans_id, msg(success)
+/- PagarTarjeta(monto, fecha, cuenta_id, tarjeta_id, moneda_id,encargado_cui): trans_id, msg(success)
+/- CrearCliente(nombres, apellidos, cui, telefono, correo, direccion, genero, link_foto, fecha_nac): cui, msg(success)
+/*- CrearCuenta(saldo, tipo, fecha_apertura, vigencia, cui): cuenta_id, msg(success)
+/- CrearPregunta(pregunta_encrip, respuesta_encrip, cuenta_id): pregunta_id, msg(success)
+/- ActualizarDCliente(cuenta_id, telefono, correo, direccion, genero, link_foto, fecha_nac): msg(success)
+/- CrearTarjeta(cuenta_id, tipo, limite, titular, fecha): tarjeta_id, state, msg(success)
+/- BloquearTarjeta(tarjeta_id, motivo, fecha, tipo): state, msg(success)
+/- CancelacionCuenta(cuenta_id, motivo, fecha,tipo) : cancelacion_id, state, msg(success)
+/- CancelacionTarjeta(tarjeta_id, motivo, fecha, tipo): cancelacion_id, state, msg(success)
+/- PermitirCuentaDolar(cuenta_id, fecha): msg(success)
+/- Comentario(detalle, categoria, tipo, fecha, punctuacion(null), cui): comentario_id, msg(success) // satifaccion o queja
+/- SolicitarPrestamo(cuenta_id/cui, monto, plazo, fecha, idtipo):prestamo_id, state, msg(success)
+/- AsignarDocumentoPrestamo(link_pdf, prestamo_id):msg(success)
+/- RegistrarEmpleado(cui, nombres, apellidos, telefono, fecha_nac, cui, correo,usuario,password, link_foto, genero, estado_civil, sucursal_id): msg(success)
+---------------------------------------------------------------------
+/- AgregarPapeleria(link_doc, cui): papeleria_id, msg(success)
+/- AsignacionRol(empleado_id, rol): msg(success)
+/- EliminarEmpleadoSolicitud(link_doc, cui): state, msg(success)
+/- CambioPassWEmpleadoSolicitud(password, cui): state, msg(success)
+/- EliminarEmpleado(cui): state, msg(success)
+/- CambioPassWEmpleado(cui):state, msg(sucess)
+/- CrearSupervisor(cui,usuario,password, password2): supervisor_id, msg(success)
+/- LoginSupervisor(usuario, password1): supervisor_id, msg(success)
+/- LoginSupe2pass(supervisor_id,password2) : msg(success)
+/- ActualizarDEmpleado(cui/user, nombres, telefono, correo, link_foto, genero, estado_civil): msg(success)
+/- ExtraerSolicitudes(): array(solicitudes) //supervisor
+/- ExtraerQuejas(): array(comentarios donde tipo es queja) //supervisor
+/- ExtraerSatisfaccion() : array(comentarios donde tipo es satisfaccion)//supervisor
+/- ExtraerCambiosPass() : array(cambios de contraseña pendientes)
+/- ExtreaerDespidos(): array(despidos pendientes)
+/- RevisarPrestamo(prestamo_id, estado, justificacion):msg(success) // funcion supervisor
+/- RevisarTarjeta(tarjeta_id, estado, justificacion):msg(success) //funcion supervisor
+/- RevisarCancelacion(cancelacion_id, estado, justificacion):msg(success)//funcion supervisor
+/- CrearAdmin(cui, 2fa): id_admin, msg(success)
+/- LoginAdmin(usuario/cui, password): id_admin, msg(suceess)
+/- LoginAdm2fa(id_admin, 2fa): msg(success)
+/- ExtraerAdministradores(): arreglo de los cui que salen en la tabla admin, con usuario nombre y apellido de empleado
+/- Monitoreo(): retiros, solicitud prestamos, bloqueos, solicitud tarjetas, despidos, cambios de contraseña
+/- GestionInventario(): dinero_quetzales, dinero_dolares, array(transacciones)
+
+Entidades ya llenas:
+Sucursal con id=1, crearla
